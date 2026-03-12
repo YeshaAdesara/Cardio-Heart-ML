@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardio Monitor - Heart Disease Prediction</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='heartlogo.png') }}" height="45" width="45" alt="Heart Logo"/>
+                Cardio Monitor
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">
+                            <i class="fas fa-heart-pulse"></i> About Heart Disease
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Counter Badge -->
+    <div id="counter">{{all_count}}</div>
+
+    <!-- Main Container -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-11 col-12">
+                <div id="form-div">
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <h1 class="display-4 font-weight-bold mb-3">
+                            <i class="fas fa-heartbeat"></i> CARDIO MONITOR
+                        </h1>
+                        <p class="lead text-muted">
+                            Advanced AI-powered heart disease risk assessment.<br>
+                            Please fill in the details below to evaluate your heart condition.
+                        </p>
+                    </div>
+
+                    <!-- Prediction Form -->
+                    <form action="{{ url_for('predict') }}" method="post">
+                        <div class="form-row">
+                            <!-- Name -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-user"></i> Your Name</label>
+                                <input class="form-control" type="text" name="name" placeholder="Enter your full name" required>
+                            </div>
+
+                            <!-- Age -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-calendar-alt"></i> Age</label>
+                                <input class="form-control" type="number" name="age" placeholder="e.g., 34" min="1" max="120" required>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-venus-mars"></i> Gender</label>
+                                <select class="custom-select" name="sex" style="height: 50px; width: 100%;" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <!-- Chest Pain Type -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-notes-medical"></i> Chest Pain Type</label>
+                                <select class="custom-select" name="cp" style="height: 50px; width: 100%;" required>
+                                    <option value="">Select Chest Pain Type</option>
+                                    <option value="Typical angina">Typical Angina</option>
+                                    <option value="Atypical angina">Atypical Angina</option>
+                                    <option value="Non-anginal pain">Non-anginal Pain</option>
+                                    <option value="Asymptomatic">Asymptomatic</option>
+                                </select>
+                            </div>
+
+                            <!-- Resting Blood Pressure -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-heartbeat"></i> Resting Blood Pressure (mm Hg)</label>
+                                <input class="form-control" type="number" name="trestbps" placeholder="e.g., 130" min="90" max="200" style="height: 50px; width: 100%;" required>
+                            </div>
+
+                            <!-- Serum Cholesterol -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-vial"></i> Serum Cholesterol (mg/dl)</label>
+                                <input class="form-control" type="number" name="chol" placeholder="e.g., 250" min="100" max="600" required>
+                            </div>
+
+                            <!-- Fasting Blood Sugar -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-syringe"></i> Fasting Blood Sugar > 120 mg/dl</label>
+                                <select class="custom-select" name="fbs" style="height: 50px; width: 100%;" required>
+                                    <option value="">Select Option</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <!-- Resting ECG -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-file-medical-alt"></i> Resting ECG Results</label>
+                                <select class="custom-select" name="restecg" style="height: 50px; width: 100%;" required>
+                                    <option value="">Select ECG Results</option>
+                                    <option value="Nothing to note">Nothing to Note</option>
+                                    <option value="ST-T Wave abnormality">ST-T Wave Abnormality</option>
+                                    <option value="Possible or definite left ventricular hypertrophy">Left Ventricular Hypertrophy</option>
+                                </select>
+                            </div>
+
+                            <!-- Maximum Heart Rate -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-running"></i> Maximum Heart Rate Achieved</label>
+                                <input class="form-control" type="number" name="thalach" placeholder="e.g., 187" min="60" max="220" required>
+                            </div>
+
+                            <!-- Exercise Induced Angina -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-dumbbell"></i> Exercise Induced Angina</label>
+                                <select class="custom-select" name="exang" style="height: 50px; width: 100%;" required>
+                                    <option value="">Select Option</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <!-- ST Depression -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-chart-line"></i> ST Depression (Oldpeak)</label>
+                                <input class="form-control" type="number" step="0.1" name="oldpeak" placeholder="e.g., 2.5" min="0" max="10" style="height: 50px; width: 100%;" required>
+                            </div>
+
+                            <!-- Slope -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-chart-area"></i> Slope of Peak Exercise ST</label>
+                                <select class="custom-select" name="slope" style="height: 50px; width: 100%;" required>
+                                    <option value="">Select Slope Type</option>
+                                    <option value="Upsloping: better heart rate with excercise(uncommon)">Upsloping (Better with Exercise)</option>
+                                    <option value="Flatsloping: minimal change(typical healthy heart)">Flat (Minimal Change)</option>
+                                    <option value="Downsloping: signs of unhealthy heart">Downsloping (Unhealthy Sign)</option>
+                                </select>
+                            </div>
+
+                            <!-- Number of Major Vessels -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-microscope"></i> Major Vessels (0-3)</label>
+                                <input class="form-control" type="number" name="ca" placeholder="e.g., 0" min="0" max="3" required>
+                            </div>
+
+                            <!-- Thal -->
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-600"><i class="fas fa-procedures"></i> Thalassemia</label>
+                                <select class="custom-select" name="thal" style="height: 50px; width: 100%;" required>
+                                    <option value="">Select Condition</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="fixed defect: used to be defect but ok now">Fixed Defect</option>
+                                    <option value="reversable defect: no proper blood movement when excercising">Reversible Defect</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">
+                            <i class="fas fa-stethoscope"></i> Predict Heart Disease Risk
+                        </button>
+                    </form>
+
+                    <!-- Note -->
+                    <div class="alert-box mt-4">
+                        <i class="fas fa-info-circle"></i> 
+                        <strong>Privacy Note:</strong> Your information will be securely processed to enhance our AI model's accuracy.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center py-4 mt-5">
+            <p class="mb-2">
+                Made with <i class="fas fa-heart text-danger"></i> and <i class="fas fa-coffee"></i> by Bhuva Harsh
+            </p>
+            <div>
+                <a href="https://www.linkedin.com/in/harsh-bhuva-3a155231b/" class="mx-2" target="_blank">
+                    <i class="fab fa-linkedin fa-2x text-primary"></i>
+                </a>
+                <a href="https://github.com/HarshBhuva25/" class="mx-2" target="_blank">
+                    <i class="fab fa-github fa-2x text-dark"></i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
