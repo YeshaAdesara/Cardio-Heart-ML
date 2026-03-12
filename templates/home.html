@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <!-- Floating Particles -->
+  <!-- Background -->
+  <div class="bg-mesh"></div>
   <div class="bg-particles">
     <span></span><span></span><span></span><span></span><span></span>
     <span></span><span></span><span></span><span></span><span></span>
@@ -37,9 +38,9 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-content">
-      <div class="hero-badge"><i class="fas fa-shield-heart"></i> AI-Powered Health Analysis</div>
+      <div class="hero-badge"><i class="fas fa-shield-heart"></i> AI-Powered Health Screening</div>
       <h1 class="hero-title">Heart Disease<br><span class="gradient-text">Risk Predictor</span></h1>
-      <p class="hero-desc">Enter your health parameters below and our machine learning model will assess your heart disease risk instantly.</p>
+      <p class="hero-desc">Provide your health parameters below and our machine learning model will instantly evaluate your cardiovascular risk using clinical data analysis.</p>
       <div class="hero-stats">
         <div class="stat-item">
           <div class="stat-number">95%</div>
@@ -51,7 +52,7 @@
         </div>
         <div class="stat-item">
           <div class="stat-number">{{all_count}}</div>
-          <div class="stat-label">Predictions</div>
+          <div class="stat-label">Analyses</div>
         </div>
       </div>
     </div>
@@ -60,22 +61,22 @@
   <!-- How it Works -->
   <section class="how-section">
     <div class="section-container">
-      <h2 class="section-title"><i class="fas fa-cogs"></i> How It Works</h2>
+      <h2 class="section-title"><i class="fas fa-wand-magic-sparkles"></i> How It Works</h2>
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-icon"><i class="fas fa-clipboard-list"></i></div>
-          <h4>1. Enter Data</h4>
-          <p>Fill in your medical parameters in the form below</p>
+          <h4>1. Input Data</h4>
+          <p>Fill in your clinical measurements and health parameters below</p>
         </div>
         <div class="step-card">
-          <div class="step-icon"><i class="fas fa-brain"></i></div>
-          <h4>2. AI Analysis</h4>
-          <p>Our KNN model processes your health data</p>
+          <div class="step-icon"><i class="fas fa-microchip"></i></div>
+          <h4>2. ML Processing</h4>
+          <p>Our KNN algorithm analyzes your data against trained patterns</p>
         </div>
         <div class="step-card">
           <div class="step-icon"><i class="fas fa-chart-pie"></i></div>
-          <h4>3. Get Results</h4>
-          <p>Receive prediction with visual health comparison</p>
+          <h4>3. View Results</h4>
+          <p>Get instant prediction with visual health comparison charts</p>
         </div>
       </div>
     </div>
@@ -87,7 +88,7 @@
       <div class="form-card">
         <div class="form-header">
           <h2><i class="fas fa-stethoscope"></i> Patient Health Assessment</h2>
-          <p>All fields are required for an accurate prediction</p>
+          <p>Complete all fields for an accurate cardiovascular risk evaluation</p>
         </div>
 
         <form action="{{ url_for('predict') }}" method="post" class="health-form">
@@ -96,16 +97,16 @@
           <div class="form-grid">
             <div class="form-field">
               <label><i class="fas fa-user"></i> Full Name</label>
-              <input type="text" name="name" placeholder="Enter your name" required>
+              <input type="text" name="name" placeholder="Enter patient name" required>
             </div>
             <div class="form-field">
-              <label><i class="fas fa-calendar"></i> Age</label>
-              <input type="number" name="age" placeholder="e.g., 45" min="1" max="120" required>
+              <label><i class="fas fa-calendar"></i> Age (years)</label>
+              <input type="number" name="age" placeholder="e.g., 52" min="1" max="120" required>
             </div>
             <div class="form-field">
               <label><i class="fas fa-venus-mars"></i> Gender</label>
               <select name="sex" required>
-                <option value="">Select Gender</option>
+                <option value="">-- Select --</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
@@ -118,7 +119,7 @@
             <div class="form-field">
               <label><i class="fas fa-notes-medical"></i> Chest Pain Type</label>
               <select name="cp" required>
-                <option value="">Select Type</option>
+                <option value="">-- Select Type --</option>
                 <option value="Typical angina">Typical Angina</option>
                 <option value="Atypical angina">Atypical Angina</option>
                 <option value="Non-anginal pain">Non-anginal Pain</option>
@@ -126,68 +127,68 @@
               </select>
             </div>
             <div class="form-field">
-              <label><i class="fas fa-heart-pulse"></i> Resting BP (mm Hg)</label>
+              <label><i class="fas fa-heart-pulse"></i> Resting Blood Pressure (mm Hg)</label>
               <input type="number" name="trestbps" placeholder="e.g., 130" min="90" max="200" required>
             </div>
             <div class="form-field">
-              <label><i class="fas fa-vial"></i> Cholesterol (mg/dl)</label>
+              <label><i class="fas fa-vial"></i> Serum Cholesterol (mg/dl)</label>
               <input type="number" name="chol" placeholder="e.g., 250" min="100" max="600" required>
             </div>
             <div class="form-field">
-              <label><i class="fas fa-droplet"></i> Fasting Blood Sugar &gt; 120</label>
+              <label><i class="fas fa-droplet"></i> Fasting Blood Sugar &gt; 120 mg/dl</label>
               <select name="fbs" required>
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option value="">-- Select --</option>
+                <option value="Yes">Yes (&gt; 120 mg/dl)</option>
+                <option value="No">No (&le; 120 mg/dl)</option>
               </select>
             </div>
             <div class="form-field">
-              <label><i class="fas fa-wave-square"></i> Resting ECG</label>
+              <label><i class="fas fa-wave-square"></i> Resting ECG Results</label>
               <select name="restecg" required>
-                <option value="">Select Result</option>
+                <option value="">-- Select Result --</option>
                 <option value="Nothing to note">Normal</option>
                 <option value="ST-T Wave abnormality">ST-T Wave Abnormality</option>
-                <option value="Possible or definite left ventricular hypertrophy">LV Hypertrophy</option>
+                <option value="Possible or definite left ventricular hypertrophy">Left Ventricular Hypertrophy</option>
               </select>
             </div>
             <div class="form-field">
-              <label><i class="fas fa-person-running"></i> Max Heart Rate</label>
-              <input type="number" name="thalach" placeholder="e.g., 187" min="60" max="220" required>
+              <label><i class="fas fa-person-running"></i> Maximum Heart Rate Achieved</label>
+              <input type="number" name="thalach" placeholder="e.g., 150" min="60" max="220" required>
             </div>
           </div>
 
           <!-- Exercise Parameters -->
-          <div class="form-section-title"><i class="fas fa-dumbbell"></i> Exercise & Stress Test</div>
+          <div class="form-section-title"><i class="fas fa-dumbbell"></i> Exercise & Stress Test Results</div>
           <div class="form-grid">
             <div class="form-field">
-              <label><i class="fas fa-bolt"></i> Exercise Angina</label>
+              <label><i class="fas fa-bolt"></i> Exercise Induced Angina</label>
               <select name="exang" required>
-                <option value="">Select</option>
+                <option value="">-- Select --</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
             </div>
             <div class="form-field">
               <label><i class="fas fa-chart-line"></i> ST Depression (Oldpeak)</label>
-              <input type="number" step="0.1" name="oldpeak" placeholder="e.g., 2.5" min="0" max="10" required>
+              <input type="number" step="0.1" name="oldpeak" placeholder="e.g., 1.5" min="0" max="10" required>
             </div>
             <div class="form-field">
-              <label><i class="fas fa-chart-area"></i> ST Slope</label>
+              <label><i class="fas fa-chart-area"></i> Peak Exercise ST Slope</label>
               <select name="slope" required>
-                <option value="">Select Slope</option>
+                <option value="">-- Select Slope --</option>
                 <option value="Upsloping: better heart rate with excercise(uncommon)">Upsloping</option>
                 <option value="Flatsloping: minimal change(typical healthy heart)">Flat</option>
                 <option value="Downsloping: signs of unhealthy heart">Downsloping</option>
               </select>
             </div>
             <div class="form-field">
-              <label><i class="fas fa-microscope"></i> Major Vessels (0-3)</label>
+              <label><i class="fas fa-microscope"></i> Major Vessels Colored (0-3)</label>
               <input type="number" name="ca" placeholder="e.g., 0" min="0" max="3" required>
             </div>
             <div class="form-field">
-              <label><i class="fas fa-dna"></i> Thalassemia</label>
+              <label><i class="fas fa-dna"></i> Thalassemia Type</label>
               <select name="thal" required>
-                <option value="">Select</option>
+                <option value="">-- Select --</option>
                 <option value="normal">Normal</option>
                 <option value="fixed defect: used to be defect but ok now">Fixed Defect</option>
                 <option value="reversable defect: no proper blood movement when excercising">Reversible Defect</option>
@@ -202,7 +203,7 @@
 
         <div class="form-note">
           <i class="fas fa-shield-halved"></i>
-          <span><strong>Privacy:</strong> Your data is processed locally and not stored permanently.</span>
+          <span><strong>Privacy First:</strong> Your data is processed locally on the server and is never stored or shared with third parties.</span>
         </div>
       </div>
     </div>
@@ -211,11 +212,10 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-container">
-     
-      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Prinsi Patel | Machine Learning Heart Disease Prediction</p>
+      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Prinsi Patel | ML-Powered Heart Disease Prediction System</p>
       <div class="footer-links">
         <a href="https://github.com/PrinsiPatel26" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/prinsi-aghera-a58369350/ " target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.linkedin.com/in/prinsi-aghera-a58369350/" target="_blank"><i class="fab fa-linkedin"></i></a>
       </div>
     </div>
   </footer>

@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <div class="bg-mesh"></div>
   <div class="bg-particles">
     <span></span><span></span><span></span><span></span><span></span>
     <span></span><span></span><span></span><span></span><span></span>
@@ -37,105 +38,104 @@
   <section class="result-section">
     <div class="section-container">
       <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Prediction Results</h2>
-      <p class="section-subtitle">Hello, <strong>{{nameofpatient}}</strong>! Here are your results.</p>
+      <p class="section-subtitle">Hello, <strong>{{nameofpatient}}</strong>! Here is your cardiovascular risk assessment.</p>
 
       {% if prediction==1 %}
-      <!-- HEALTHY RESULT -->
+      <!-- HEALTHY / LOW RISK -->
       <div class="result-banner result-healthy">
         <div class="result-icon-wrap healthy-icon">
           <i class="fas fa-heart-circle-check"></i>
         </div>
         <div class="result-text">
           <h3>Great News! Low Risk Detected</h3>
-          <p>Based on our AI analysis, you have a <strong>very low probability</strong> of heart disease. Keep maintaining your healthy lifestyle!</p>
+          <p>Based on our ML analysis of your 13 health parameters, you show a <strong>low probability</strong> of heart disease. Continue maintaining your healthy lifestyle and regular check-ups!</p>
         </div>
       </div>
 
       <div class="tips-grid">
         <div class="tip-card tip-green">
           <div class="tip-icon"><i class="fas fa-apple-whole"></i></div>
-          <h4>Healthy Diet</h4>
-          <p>Continue eating fruits, vegetables, and whole grains to keep your heart strong.</p>
+          <h4>Balanced Nutrition</h4>
+          <p>Continue eating fruits, vegetables, whole grains and lean proteins to keep your cardiovascular system strong.</p>
         </div>
         <div class="tip-card tip-green">
           <div class="tip-icon"><i class="fas fa-person-running"></i></div>
-          <h4>Stay Active</h4>
-          <p>Regular exercise of 30+ minutes daily helps maintain cardiovascular health.</p>
+          <h4>Regular Exercise</h4>
+          <p>Maintain 30+ minutes of moderate physical activity daily to support long-term heart health.</p>
         </div>
         <div class="tip-card tip-green">
           <div class="tip-icon"><i class="fas fa-bed"></i></div>
-          <h4>Rest Well</h4>
-          <p>Adequate sleep (7-9 hours) is essential for heart recovery and overall health.</p>
+          <h4>Quality Sleep</h4>
+          <p>Aim for 7-9 hours of quality sleep nightly — it's essential for cardiac recovery and overall wellness.</p>
         </div>
       </div>
 
       {% elif prediction==0 %}
-      <!-- AT RISK RESULT -->
+      <!-- AT RISK / HIGH RISK -->
       <div class="result-banner result-danger">
         <div class="result-icon-wrap danger-icon">
           <i class="fas fa-triangle-exclamation"></i>
         </div>
         <div class="result-text">
-          <h3>Attention: Higher Risk Detected</h3>
-          <p>Our analysis indicates a <strong>higher probability</strong> of heart disease. Please consult a cardiologist for a comprehensive evaluation.</p>
+          <h3>Attention: Elevated Risk Detected</h3>
+          <p>Our analysis of your health parameters indicates a <strong>higher probability</strong> of heart disease. We strongly recommend consulting a cardiologist for a comprehensive professional evaluation.</p>
         </div>
       </div>
 
       <div class="tips-grid">
         <div class="tip-card tip-red">
           <div class="tip-icon"><i class="fas fa-user-doctor"></i></div>
-          <h4>See a Doctor</h4>
-          <p>Schedule an appointment with a cardiologist for professional evaluation and testing.</p>
+          <h4>Consult a Cardiologist</h4>
+          <p>Schedule an appointment with a heart specialist for professional diagnostic tests and evaluation.</p>
         </div>
         <div class="tip-card tip-red">
           <div class="tip-icon"><i class="fas fa-ban-smoking"></i></div>
-          <h4>Lifestyle Changes</h4>
-          <p>Avoid smoking, reduce stress, and monitor blood pressure regularly.</p>
+          <h4>Lifestyle Modifications</h4>
+          <p>Avoid smoking, manage stress levels, monitor blood pressure regularly and maintain a heart-healthy diet.</p>
         </div>
         <div class="tip-card tip-red">
           <div class="tip-icon"><i class="fas fa-pills"></i></div>
-          <h4>Follow Treatment</h4>
-          <p>If prescribed medication, follow your doctor's instructions carefully.</p>
+          <h4>Follow Medical Advice</h4>
+          <p>If prescribed medication or treatment plans, follow your healthcare provider's instructions carefully.</p>
         </div>
       </div>
 
       <div class="warning-box">
         <i class="fas fa-circle-info"></i>
-        <span>This is an AI-based preliminary screening, <strong>not a medical diagnosis</strong>. Always consult a qualified healthcare professional.</span>
+        <span>This is an AI-based preliminary screening tool, <strong>not a clinical diagnosis</strong>. Always consult a qualified healthcare professional for medical decisions.</span>
       </div>
       {% endif %}
 
       <!-- Charts Section -->
       <div class="charts-section">
-        <h3 class="charts-title"><i class="fas fa-chart-column"></i> Your Health Data vs Normal Values</h3>
+        <h3 class="charts-title"><i class="fas fa-chart-column"></i> Your Health Parameters vs Normal Range</h3>
         <div class="charts-grid">
           <div class="chart-card">
-            <h4>Cardiac Parameters</h4>
-            <img src="{{url_for('static', filename='plotng.png')}}" alt="Chart 1">
+            <h4>Cardiac Risk Indicators</h4>
+            <img src="{{url_for('static', filename='plotng.png')}}" alt="Cardiac Parameters Chart">
           </div>
           <div class="chart-card">
-            <h4>Vital Measurements</h4>
-            <img src="{{url_for('static', filename='plotng2.png')}}" alt="Chart 2">
+            <h4>Vital Measurements Comparison</h4>
+            <img src="{{url_for('static', filename='plotng2.png')}}" alt="Vital Measurements Chart">
           </div>
         </div>
       </div>
 
       <!-- Actions -->
       <div class="result-actions">
-        <a href="{{ url_for('home') }}" class="submit-btn"><i class="fas fa-rotate-left"></i> New Prediction</a>
+        <a href="{{ url_for('home') }}" class="submit-btn"><i class="fas fa-rotate-left"></i> New Assessment</a>
         <a href="{{ url_for('about') }}" class="btn-outline"><i class="fas fa-book-open"></i> Learn About Heart Disease</a>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-   <footer class="site-footer">
+  <footer class="site-footer">
     <div class="footer-container">
-     
-      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Prinsi Patel | Machine Learning Heart Disease Prediction</p>
+      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Prinsi Patel | ML-Powered Heart Disease Prediction System</p>
       <div class="footer-links">
         <a href="https://github.com/PrinsiPatel26" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/prinsi-aghera-a58369350/ " target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.linkedin.com/in/prinsi-aghera-a58369350/" target="_blank"><i class="fab fa-linkedin"></i></a>
       </div>
     </div>
   </footer>

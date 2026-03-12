@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <div class="bg-mesh"></div>
   <div class="bg-particles">
     <span></span><span></span><span></span><span></span><span></span>
     <span></span><span></span><span></span><span></span><span></span>
@@ -32,18 +33,19 @@
       <div class="error-icon">
         <i class="fas fa-heart-crack"></i>
       </div>
-      <h1 class="error-title">Oops! Something went wrong</h1>
-      <p class="error-desc">It looks like some required fields were missing or invalid. Please go back and fill in all the details correctly.</p>
+      <h1 class="error-title">Something Went Wrong</h1>
+      <p class="error-desc">We couldn't process your request. This usually happens when required fields are missing or contain invalid values.</p>
       <div class="error-tips">
-        <h4><i class="fas fa-lightbulb"></i> Quick Tips:</h4>
+        <h4><i class="fas fa-lightbulb"></i> Troubleshooting Tips:</h4>
         <ul>
-          <li>Make sure all form fields are filled in</li>
-          <li>Check that numeric values are within valid ranges</li>
-          <li>Ensure dropdown selections have been made</li>
+          <li>Ensure all form fields are filled in completely</li>
+          <li>Verify that numeric values are within valid clinical ranges</li>
+          <li>Check that all dropdown selections have been made</li>
+          <li>Try refreshing the page and submitting again</li>
         </ul>
       </div>
       <a href="{{ url_for('home') }}" class="submit-btn">
-        <i class="fas fa-arrow-left"></i> Go Back & Try Again
+        <i class="fas fa-arrow-left"></i> Return to Assessment Form
       </a>
     </div>
   </section>
