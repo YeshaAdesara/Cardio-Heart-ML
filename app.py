@@ -1,4 +1,6 @@
 from itertools import count
+import matplotlib
+matplotlib.use('Agg')
 from flask import Flask, render_template ,url_for ,request,Response
 import numpy as np
 import database
