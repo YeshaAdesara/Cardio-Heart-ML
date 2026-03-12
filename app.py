@@ -36,36 +36,42 @@ app = Flask ( __name__ )
 
 
 def create_figure1(data1):
-    fig = plt.subplots(figsize =(12, 8))
+    plt.close('all')
+    fig, ax = plt.subplots(figsize=(12, 8))
     barWidth = 0.25
     normal = data1[0]
     user = data1[1]
     br1 = np.arange(len(normal))
     br2 = [x + barWidth for x in br1]
-    # br3 = [x + barWidth for x in br2]
-    plt.bar(br1, normal, color ='g', width = barWidth,edgecolor ='grey', label ='Normal Value')
-    plt.bar(br2, user, color ='r', width = barWidth,edgecolor ='grey', label ="Yours Value")
-    # plt.bar(br3, CSE, color ='b', width = barWidth, edgecolor ='grey', label ='CSE')
-    plt.xlabel('Health status defining attributes', fontweight ='bold', fontsize = 15)
-    plt.ylabel('respective values', fontweight ='bold', fontsize = 15)
-    plt.xticks([r + barWidth for r in range(len(normal))],['cp','chol','fbs','exang','oldpeak','slope','ca','thal'])
-    plt.legend()
-    plt.savefig('static/plotng.png') 
+    ax.bar(br1, normal, color='g', width=barWidth, edgecolor='grey', label='Normal Value')
+    ax.bar(br2, user, color='r', width=barWidth, edgecolor='grey', label="Yours Value")
+    ax.set_xlabel('Health status defining attributes', fontweight='bold', fontsize=15)
+    ax.set_ylabel('Respective values', fontweight='bold', fontsize=15)
+    ax.set_xticks([r + barWidth for r in range(len(normal))])
+    ax.set_xticklabels(['cp','chol','fbs','exang','oldpeak','slope','ca','thal'])
+    ax.legend()
+    plt.tight_layout()
+    plt.savefig('static/plotng.png')
+    plt.close(fig)
 
 def create_figure2(data2):
-    fig = plt.subplots(figsize =(12, 8))
+    plt.close('all')
+    fig, ax = plt.subplots(figsize=(12, 8))
     barWidth = 0.25
     normal = data2[0]
     user = data2[1]
     br1 = np.arange(len(normal))
     br2 = [x + barWidth for x in br1]
-    plt.bar(br1, normal, color ='g', width = barWidth,edgecolor ='grey', label ='Normal Value')
-    plt.bar(br2, user, color ='r', width = barWidth,edgecolor ='grey', label ="Yours Value")
-    plt.xlabel('Health status defining attributes', fontweight ='bold', fontsize = 15)
-    plt.ylabel('respective values', fontweight ='bold', fontsize = 15)
-    plt.xticks([r + barWidth for r in range(len(normal))],['trestbps','chol','thalach'])
-    plt.legend()
-    plt.savefig('static/plotng2.png') 
+    ax.bar(br1, normal, color='g', width=barWidth, edgecolor='grey', label='Normal Value')
+    ax.bar(br2, user, color='r', width=barWidth, edgecolor='grey', label="Yours Value")
+    ax.set_xlabel('Health status defining attributes', fontweight='bold', fontsize=15)
+    ax.set_ylabel('Respective values', fontweight='bold', fontsize=15)
+    ax.set_xticks([r + barWidth for r in range(len(normal))])
+    ax.set_xticklabels(['trestbps','chol','thalach'])
+    ax.legend()
+    plt.tight_layout()
+    plt.savefig('static/plotng2.png')
+    plt.close(fig)
 
 @app.route('/')
 def home():
