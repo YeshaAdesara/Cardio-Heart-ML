@@ -6,11 +6,11 @@
   <title>Cardio Monitor - About Heart Disease</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="theme-about">
   <div class="bg-mesh"></div>
   <div class="bg-particles">
     <span></span><span></span><span></span><span></span><span></span>
@@ -39,6 +39,11 @@
     <div class="section-container">
       <h1 class="about-hero-title"><i class="fas fa-heart-pulse"></i> Understanding Heart Disease</h1>
       <p class="about-hero-desc">Heart disease remains the leading cause of death globally. Knowledge is the first and most powerful step toward prevention and early detection.</p>
+      <div class="about-quick-facts">
+        <div class="about-chip"><i class="fas fa-triangle-exclamation"></i> 1 in 4 deaths linked to heart disease</div>
+        <div class="about-chip"><i class="fas fa-clock"></i> Early detection improves outcomes</div>
+        <div class="about-chip"><i class="fas fa-shield-heart"></i> Many risks are preventable</div>
+      </div>
     </div>
   </section>
 
@@ -237,7 +242,7 @@
     <div class="footer-container">
       <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Isha Hinshu | ML-Powered Heart Disease Prediction System</p>
       <div class="footer-links">
-        <a href="https://github.com/hinsuisha24114" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/YeshaAdesara" target="_blank"><i class="fab fa-github"></i></a>
       </div>
     </div>
   </footer>

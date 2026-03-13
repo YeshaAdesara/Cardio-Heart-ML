@@ -6,11 +6,11 @@
   <title>Cardio Monitor - Heart Disease Prediction</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="theme-home">
   <!-- Background -->
   <div class="bg-mesh"></div>
   <div class="bg-particles">
@@ -38,8 +38,11 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-content">
+      <div class="hero-orbit" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
       <div class="hero-badge"><i class="fas fa-shield-heart"></i> AI-Powered Health Screening</div>
-      <h1 class="hero-title">Heart Disease<br><span class="gradient-text">Risk Predictor</span></h1>
+      <h1 class="hero-title">Cardio Clarity<br><span class="gradient-text">Risk Predictor</span></h1>
       <p class="hero-desc">Provide your health parameters below and our machine learning model will instantly evaluate your cardiovascular risk using clinical data analysis.</p>
       <div class="hero-stats">
         <div class="stat-item">
@@ -54,6 +57,9 @@
           <div class="stat-number">{{all_count}}</div>
           <div class="stat-label">Analyses</div>
         </div>
+      </div>
+      <div class="hero-cta-row">
+        <a href="#predict-form" class="submit-btn hero-cta-btn"><i class="fas fa-clipboard-check"></i> Start Screening</a>
       </div>
     </div>
   </section>
@@ -212,9 +218,9 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-container">
-      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Isha Hinshu | ML-Powered Heart Disease Prediction System</p>
+      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Yesha Adesara | ML-Powered Heart Disease Prediction System</p>
       <div class="footer-links">
-        <a href="https://github.com/hinsuisha24114" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/YeshaAdesara" target="_blank"><i class="fab fa-github"></i></a>
       </div>
     </div>
   </footer>

@@ -6,11 +6,11 @@
   <title>Cardio Monitor - Prediction Results</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="theme-result">
   <div class="bg-mesh"></div>
   <div class="bg-particles">
     <span></span><span></span><span></span><span></span><span></span>
@@ -40,7 +40,29 @@
       <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Prediction Results</h2>
       <p class="section-subtitle">Hello, <strong>{{nameofpatient}}</strong>! Here is your cardiovascular risk assessment.</p>
 
-      {% if prediction==1 %}
+      <div class="risk-meter">
+        <div class="risk-meter-track">
+          <span class="risk-meter-fill {{ 'risk-high' if prediction == 1 else 'risk-low' }}"></span>
+        </div>
+        <div class="risk-meter-label">{{ 'Higher risk profile detected' if prediction == 1 else 'Lower risk profile detected' }}</div>
+      </div>
+
+      <div class="result-meta-grid">
+        <div class="result-meta-card">
+          <span class="meta-label">Prediction</span>
+          <span class="meta-value">{{ 'Disease Risk Detected' if prediction == 1 else 'Low Risk Pattern' }}</span>
+        </div>
+        <div class="result-meta-card">
+          <span class="meta-label">Model Runs Since Reload</span>
+          <span class="meta-value">{{ model_counter }}</span>
+        </div>
+        <div class="result-meta-card">
+          <span class="meta-label">Total Assessments</span>
+          <span class="meta-value">{{ total_counter }}</span>
+        </div>
+      </div>
+
+      {% if prediction==0 %}
       <!-- HEALTHY / LOW RISK -->
       <div class="result-banner result-healthy">
         <div class="result-icon-wrap healthy-icon">
@@ -70,7 +92,7 @@
         </div>
       </div>
 
-      {% elif prediction==0 %}
+      {% elif prediction==1 %}
       <!-- AT RISK / HIGH RISK -->
       <div class="result-banner result-danger">
         <div class="result-icon-wrap danger-icon">
@@ -132,9 +154,9 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-container">
-      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Isha Hinshu | ML-Powered Heart Disease Prediction System</p>
+      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Yesha Adesara | ML-Powered Heart Disease Prediction System</p>
       <div class="footer-links">
-        <a href="https://github.com/hinsuisha24114" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/YeshaAdesara" target="_blank"><i class="fab fa-github"></i></a>
       </div>
     </div>
   </footer>

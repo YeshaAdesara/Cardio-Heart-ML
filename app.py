@@ -3,6 +3,7 @@ import matplotlib
 matplotlib.use('Agg')
 from flask import Flask, render_template ,url_for ,request,Response
 import numpy as np
+from pathlib import Path
 import database
 import prediction
 import json
@@ -19,6 +20,8 @@ import modelbuild
 
 
 app = Flask ( __name__ )
+BASE_DIR = Path(__file__).resolve().parent
+STATIC_DIR = BASE_DIR / "static"
 
 
 
@@ -53,7 +56,7 @@ def create_figure1(data1):
     ax.set_xticklabels(['cp','chol','fbs','exang','oldpeak','slope','ca','thal'])
     ax.legend()
     plt.tight_layout()
-    plt.savefig('static/plotng.png')
+    plt.savefig(STATIC_DIR / 'plotng.png')
     plt.close(fig)
 
 def create_figure2(data2):
@@ -72,8 +75,23 @@ def create_figure2(data2):
     ax.set_xticklabels(['trestbps','chol','thalach'])
     ax.legend()
     plt.tight_layout()
-    plt.savefig('static/plotng2.png')
+    plt.savefig(STATIC_DIR / 'plotng2.png')
     plt.close(fig)
+
+
+def _validate_clinical_ranges(age, trestbps, chol, thalach, oldpeak, ca):
+    if not 1 <= age <= 120:
+        raise ValueError("Age must be between 1 and 120.")
+    if not 80 <= trestbps <= 250:
+        raise ValueError("Resting blood pressure must be between 80 and 250 mm Hg.")
+    if not 80 <= chol <= 700:
+        raise ValueError("Serum cholesterol must be between 80 and 700 mg/dl.")
+    if not 40 <= thalach <= 250:
+        raise ValueError("Maximum heart rate must be between 40 and 250 bpm.")
+    if not 0 <= oldpeak <= 10:
+        raise ValueError("ST depression (oldpeak) must be between 0 and 10.")
+    if not 0 <= ca <= 3:
+        raise ValueError("Major vessels colored must be between 0 and 3.")
 
 @app.route('/')
 def home():
@@ -109,21 +127,31 @@ def predict():
             slope=request.form.get('slope', 'Flatsloping: minimal change(typical healthy heart)')
             ca=request.form.get('ca', '0')
             thal=request.form.get('thal', 'normal')
+
+            # Validate and normalize numeric fields before model inference.
+            age = int(age)
+            trestbps = float(trestbps)
+            chol = float(chol)
+            thalach = float(thalach)
+            oldpeak = float(oldpeak)
+            ca = int(ca)
+            _validate_clinical_ranges(age, trestbps, chol, thalach, oldpeak, ca)
+
             counter+=1
             if(counter<=50):
-                result=prediction.preprocess(age,sex,cp,trestbps,restecg,chol,fbs,thalach,exang,oldpeak,slope,ca,thal )
+                result=prediction.preprocess(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal )
             else:
                 #modelbuild.bulidmodel()
-                result=prediction.preprocess(age,sex,cp,trestbps,restecg,chol,fbs,thalach,exang,oldpeak,slope,ca,thal )
+                result=prediction.preprocess(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal )
                 counter=0
             #database.crudOperation(age,sex,cp,trestbps,restecg,chol,fbs,thalach,exang,oldpeak,slope,ca,thal,result)
-            data1,data2=visualization.visualizationpreprocess(age,sex,cp,trestbps,restecg,chol,fbs,thalach,exang,oldpeak,slope,ca,thal,result)
+            data1,data2=visualization.visualizationpreprocess(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,result)
             create_figure1(data1)
             create_figure2(data2)
             return render_template ('result.html',prediction = result, nameofpatient=nameofpatient, model_counter=counter, total_counter=counter2)
         except Exception as e:
             print(f"Error: {str(e)}")
-            return render_template('error.html')
+            return render_template('error.html', error_message=str(e))
 
 @app.route('/about')
 def about():

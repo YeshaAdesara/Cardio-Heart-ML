@@ -6,11 +6,11 @@
   <title>Cardio Monitor - Error</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="theme-error">
   <div class="bg-mesh"></div>
   <div class="bg-particles">
     <span></span><span></span><span></span><span></span><span></span>
@@ -35,6 +35,9 @@
       </div>
       <h1 class="error-title">Something Went Wrong</h1>
       <p class="error-desc">We couldn't process your request. This usually happens when required fields are missing or contain invalid values.</p>
+      {% if error_message %}
+      <p class="error-technical"><strong>Details:</strong> {{ error_message }}</p>
+      {% endif %}
       <div class="error-tips">
         <h4><i class="fas fa-lightbulb"></i> Troubleshooting Tips:</h4>
         <ul>
@@ -43,6 +46,10 @@
           <li>Check that all dropdown selections have been made</li>
           <li>Try refreshing the page and submitting again</li>
         </ul>
+      </div>
+      <div class="error-help-card">
+        <i class="fas fa-circle-info"></i>
+        <span>If this keeps happening, retry with realistic medical values and submit once after page reload.</span>
       </div>
       <a href="{{ url_for('home') }}" class="submit-btn">
         <i class="fas fa-arrow-left"></i> Return to Assessment Form
@@ -53,7 +60,7 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-container">
-      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by Isha Hinshu</p>
+      <p class="footer-text">Built with <i class="fas fa-heart" style="color:#ef4444"></i> by YeshaAdesara</p>
     </div>
   </footer>
 </body>

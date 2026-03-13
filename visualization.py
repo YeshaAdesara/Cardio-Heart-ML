@@ -5,7 +5,7 @@ import io
 import random
 import numpy as np
 
-def visualizationpreprocess(age,sex,cp,trestbps,restecg,chol,fbs,thalach,exang,oldpeak,slope,ca,thal,result):
+def visualizationpreprocess(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,result):
     if sex.lower()=="male":
         sex=1
     else: sex=0
@@ -16,7 +16,7 @@ def visualizationpreprocess(age,sex,cp,trestbps,restecg,chol,fbs,thalach,exang,o
     elif cp=="Non-anginal pain":
         cp=2
     elif cp=="Asymptomatic":
-        cp=2
+        cp=3
     if exang=="Yes":
         exang=1
     elif exang=="No":

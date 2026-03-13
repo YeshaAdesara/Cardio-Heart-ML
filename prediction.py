@@ -1,12 +1,41 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 import joblib
-scal=StandardScaler()
-clfr = joblib.load("heartmodel.pkl")
- 
-def preprocess(age,sex,cp,trestbps,restecg,chol,fbs,thalach,exang,oldpeak,slope,ca,thal ):   
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_CANDIDATES = [
+    BASE_DIR / "heartmodel.pkl",
+    BASE_DIR / "Heart_model1.pkl",
+]
+
+
+def _load_model():
+    for model_path in MODEL_CANDIDATES:
+        if model_path.exists():
+            return joblib.load(model_path)
+    raise FileNotFoundError(
+        "Could not find a trained model file. Expected one of: "
+        + ", ".join(str(p.name) for p in MODEL_CANDIDATES)
+    )
+
+
+clfr = _load_model()
+
+# Fit the scaler once using the same training split strategy used during prediction.
+_df = pd.read_csv(BASE_DIR / "heart.csv")
+_X = _df.drop("target", axis=1)
+_y = _df["target"]
+_X_train, _X_test, _y_train, _y_test = train_test_split(
+    _X, _y, test_size=0.20, random_state=0
+)
+_scaler = StandardScaler()
+_scaler.fit(_X_train)
+
+
+def preprocess(age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal):
  
     if sex.lower()=="male":
         sex=1 
@@ -34,31 +63,22 @@ def preprocess(age,sex,cp,trestbps,restecg,chol,fbs,thalach,exang,oldpeak,slope,
     elif slope=="Downsloping: signs of unhealthy heart":
         slope=2  
     if thal=="fixed defect: used to be defect but ok now":
-        thal=6
+        thal=2
     elif thal=="reversable defect: no proper blood movement when excercising":
-        thal=7
+        thal=3
     elif thal=="normal":
-        thal=2.31
+        thal=1
     if restecg=="Nothing to note":
         restecg=0
     elif restecg=="ST-T Wave abnormality":
         restecg=1
     elif restecg=="Possible or definite left ventricular hypertrophy":
         restecg=2
-    user_input=[age,sex,cp,trestbps,restecg,chol,fbs,thalach,exang,oldpeak,slope,ca,thal]
-    df=pd.read_csv('heart.csv')
-    y = df["target"]
-    X = df.drop('target',axis=1)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state = 0)
-    scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)
-    user_input=np.array(user_input)
-    user_input=user_input.reshape(1,-1)
-    user_input=scaler.transform(user_input)
-    print(user_input)
+    user_input=[age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal]
+    user_input=np.array(user_input, dtype=float).reshape(1,-1)
+    user_input=_scaler.transform(user_input)
     prediction = clfr.predict(user_input)
     result = int(prediction[0])
-    print(result)
 
     return result
 
